@@ -40,6 +40,7 @@ public class MainPage {
     public void toStock(){
         //
         //
+        //
 
     }
 }
