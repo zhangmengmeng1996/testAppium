@@ -34,12 +34,12 @@ public class MainPage {
 
     public SearchPage toSearch() throws MalformedURLException {
         driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-        driver.findElement(By.id("com.xueqiu.android:id/home_search")).click();
+        driver.findElement(By.id("com.xueqiu.androidit brance :id/home_search")).click();
         return new SearchPage(driver);
     }
     public void toStock(){
         //
-        //
+        System.out.println("111");
         //
 
     }
