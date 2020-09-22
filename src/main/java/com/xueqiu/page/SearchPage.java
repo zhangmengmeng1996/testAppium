@@ -14,17 +14,19 @@ import java.util.concurrent.TimeUnit;
  * @author: qiuyu
  * @create: 2020-09-11 13:48
  **/
-public class SearchPage {
-    private AppiumDriver<WebElement> driver;
-    public SearchPage(AppiumDriver driver){
-      this.driver=driver;
+public class SearchPage extends BasePage{
+
+    public SearchPage(AppiumDriver<WebElement> driver) {
+        super(driver);
     }
+
     /*
-        根据传入的关键值进行搜索
-    */
+            根据传入的关键值进行搜索
+        */
     public SearchPage search(String keyword){
         driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-        driver.findElement(By.id("com.xueqiu.android:id/search_input_text")).sendKeys(keyword);
+        sendkeys(By.id("com.xueqiu.android:id/search_input_text"),keyword);
+        //driver.findElement(By.id("com.xueqiu.android:id/search_input_text")).sendKeys(keyword);
 
         return this;
     }
@@ -32,19 +34,21 @@ public class SearchPage {
     获取查询结果中的list
      */
     public List<String> getSearchList(){
-        List<String> list=new ArrayList<String>();
-        for(Object element:driver.findElements(By.id("name"))){
+        List<String> list=new ArrayList<>();
+       /* for(Object element:driver.findElements(By.id("name"))){
             list.add(((WebElement) element).getText());
-        }
-
+        }*/
+       //lambda表达式
+       driver.findElements(By.id("name")).forEach(element->list.add(element.getText()));
         return list;
     }
     /*
    点击搜索项获取传入的价格
      */
     public double getPrice(){
-        driver.findElement(By.id("com.xueqiu.android:id/code")).click();
-        return Double.parseDouble(driver.findElement(By.id("com.xueqiu.android:id/current_price")).getText());
+        click(By.id("com.xueqiu.android:id/code"));
+        //driver.findElement(By.id("com.xueqiu.android:id/code")).click();
+        return Double.parseDouble(find(By.id("com.xueqiu.android:id/current_price")).getText());
 
     }
 }

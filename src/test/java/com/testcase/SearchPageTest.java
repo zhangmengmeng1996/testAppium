@@ -2,6 +2,7 @@ package com.testcase;
 
 import com.xueqiu.page.MainPage;
 import com.xueqiu.page.SearchPage;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -32,6 +33,10 @@ public class SearchPageTest {
             e.printStackTrace();
         }
 
+    }
+    @AfterAll
+    static void afterAll(){
+        searchPage.quit();
     }
     @ParameterizedTest
     @CsvSource({"alibaba,阿里巴巴","jd,京东"})
