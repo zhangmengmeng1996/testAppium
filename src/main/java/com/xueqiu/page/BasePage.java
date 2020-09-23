@@ -17,6 +17,7 @@ import java.util.List;
  * @author: qiuyu
  * @create: 2020-09-20 16:19
  **/
+//adb logcat
 public class BasePage {
     public  AppiumDriver<WebElement> driver;
     WebDriverWait wait;

@@ -27,7 +27,6 @@ public class SearchPage extends BasePage{
         driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
         sendkeys(By.id("com.xueqiu.android:id/search_input_text"),keyword);
         //driver.findElement(By.id("com.xueqiu.android:id/search_input_text")).sendKeys(keyword);
-
         return this;
     }
     /*
