@@ -3,6 +3,7 @@ package com.wework.page;
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,7 +24,7 @@ public class CalPage extends BasePage{
     //获取列表
     private final By taskList = By.id("hdg");
     //首页日程入口
-    private By add =By.id("an0");
+    private By add =By.id("hxm");
 
     public CalPage(AppiumDriver<WebElement> driver) {
         super(driver);
@@ -34,18 +35,24 @@ public class CalPage extends BasePage{
       */
     public CalPage addCal(String name,String time){
 
+
         click(add);
-        click(By.id("hxm"));
         sendkeys(taskName,name);
         click(save);
         return this;
     }
-    public List<String> getList(String date){
+    /*
+    获取日程的list
+     */
+    public List<String> getCalList(String date){
+        /*//不加等待再次返回时没有效果
+        wait.until(ExpectedConditions.visibilityOfElementLocated(taskList));
         if(date!=null){
             //todo:选择日期
         }
         int i=0;
        List<String> list= driver.findElements(taskList).stream().map(x->x.getText()).collect(Collectors.toList());
+       //尝试把输入的list给遍历出来
         for (String m;i<list.size();i++){
             m=list.get(i);
             System.out.println(m);
@@ -53,9 +60,29 @@ public class CalPage extends BasePage{
         List<String> list1=new ArrayList<>();
          for(Object element:driver.findElements(taskList)){
             list1.add(((WebElement) element).getText());
-        }
-        return list1;
+        }*/
+
+        return getList(taskList);
         //driver.findElements(taskList).stream().map(x->x.getText()).collect(Collectors.toList());
 
+    }
+    /*
+    删除日程
+     */
+    public CalPage delete(String deleteArea){
+       for(Object element:driver.findElements(taskList)){
+           System.out.println(((WebElement) element).getText());
+           //不能用==号判断因为二者指向的是不同的对象地址不同，用equals判断内容
+           if(deleteArea.equals(((WebElement) element).getText())){
+               System.out.println("1111");
+
+              ((WebElement) element).click();
+                //删除按钮
+              click(By.id("bpz"));
+              //确认删除
+              click(By.id("bjp"));
+           }
+       }
+        return this;
     }
 }
