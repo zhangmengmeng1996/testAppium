@@ -7,10 +7,12 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.springframework.expression.spel.CodeFlow;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -20,7 +22,7 @@ import java.util.List;
  * @create: 2020-09-20 16:19
  **/
 //adb logcat
-public class BasePage {
+public class BasePage extends com.test_framework.BasePage {
     private int timeout=20;
     public  AppiumDriver<WebElement> driver;
     WebDriverWait wait;
@@ -33,7 +35,7 @@ public class BasePage {
         //调用启动app
         startApp(this.appPackage,this.appActivity);
     }
-
+    public BasePage(){}
     public BasePage(AppiumDriver<WebElement> driver) {
         this.driver = driver;
         wait=new WebDriverWait(driver,timeout);
@@ -80,6 +82,23 @@ public class BasePage {
      */
     public void click(String text){
         find(text).click();
+    }
+    @Override
+    public void click(HashMap<String,Object> hashMap){
+        super.click(hashMap);
+        String key= (String) hashMap.keySet().toArray()[0];
+        String value= (String) hashMap.values().toArray()[0];
+        By by = null;
+        if(key.toLowerCase()=="id"){
+            by=By.id(value);
+        }
+        if(key.toLowerCase()=="linktext".toLowerCase()){
+            by=By.linkText(value);
+        }
+        if(key.toLowerCase()=="partiallinktext".toLowerCase()){
+            by=By.partialLinkText(value);
+        }
+        click(by);
     }
     /*
     By.xpath某个元素
