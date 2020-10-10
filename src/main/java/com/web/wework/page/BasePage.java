@@ -1,11 +1,19 @@
 package com.web.wework.page;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Cookie;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.StringTokenizer;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -60,6 +68,70 @@ public class BasePage extends com.test_framework.BasePage{
         //判断某个元素是否被加到了dom树里，并不代表该元素一定可见；
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(by));
         webDriver.findElement(by).sendKeys(path);
+    }
+    @Override
+    public void click(HashMap<String,Object> hashMap){
+        super.click(hashMap);
+        String key= (String) hashMap.keySet().toArray()[0];
+        String value= (String) hashMap.values().toArray()[0];
+        By by = null;
+        if(key.toLowerCase().equals("id")){
+            by=By.id(value);
+        }
+        if(key.toLowerCase().equals("linktext".toLowerCase())){
+            by=By.linkText(value);
+        }
+        if(key.toLowerCase().equals("partiallinktext".toLowerCase())){
+            by=By.partialLinkText(value);
+        }
+        if(key.toLowerCase().equals("xpath".toLowerCase())){
+            by=By.xpath(value);
+        }
+        wait.until(ExpectedConditions.visibilityOfElementLocated(by));
+        click(by);
+    }
+    @Override
+    public void action(HashMap<String,Object> map){
+        super.action(map);
+        if(map.get("action").toString().toLowerCase().equals("get")){
+
+            webDriver.get(map.get("url").toString());
+            try {
+                FileReader fileReader = new FileReader("cookie.txt");
+                BufferedReader bufferedReader = new BufferedReader(fileReader);
+                String line;
+
+                while ((line = bufferedReader.readLine()) != null) {
+                    //按；获取每一行数据
+                    StringTokenizer tokenizer = new StringTokenizer(line, ";");
+                    String name = tokenizer.nextToken();
+                    String value = tokenizer.nextToken();
+                    String domain = tokenizer.nextToken();
+                    String path = tokenizer.nextToken();
+                    Date expiry = null;
+                    String dt = tokenizer.nextToken();
+                    //date类型转换为
+                    if (!dt.equals("null")) {
+                        SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
+                        //把 string 转换成 date
+                        expiry = sdf.parse(dt);
+                    }
+                    //把 string 转换成 boolean
+                    boolean isSecure = Boolean.parseBoolean(tokenizer.nextToken());
+                    Cookie cookie = new Cookie(name, value, domain, path, expiry, isSecure);
+                    webDriver.manage().addCookie(cookie);
+
+                }
+                webDriver.get(map.get("url").toString());
+                //隐式等待
+                webDriver.manage().timeouts().implicitlyWait(5,TimeUnit.SECONDS);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        else {
+            System.out.println("error get");
+        }
     }
 
 }

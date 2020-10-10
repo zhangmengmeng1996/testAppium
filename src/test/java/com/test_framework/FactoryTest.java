@@ -10,7 +10,7 @@ class FactoryTest {
     void create() {
         //静态外部类调用静态
         BasePage web=Factory.create("web");
-        UIAuto uiAuto= web.load("/test_framework/uiauto.yaml");
+        UIAuto uiAuto= web.load("/test_framework/webauto.yaml");
         web.run(uiAuto);
     }
 }

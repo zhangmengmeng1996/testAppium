@@ -21,11 +21,8 @@ steps:
 #  - id: search
 #    action: sendKeys
 #    text: "seveniruby hogwarts"
+  - action: get
+    url: https://work.weixin.qq.com/wework_admin/frame
+  - click: {id: menu_contacts}
+  - click: {linktext: 添加成员}
 
-  - id: search
-    sendKeys: "seveniruby hogwarts"
-    #最简化
-  - click: {id: search}
-  - id: search
-    action: getText
-    key: search_text
