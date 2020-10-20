@@ -1,0 +1,17 @@
+name: 添加企业微信成员
+description: 添加企业微信成员，查找确认添加已成功
+steps:
+
+
+    - action: get
+      url: https://work.weixin.qq.com/wework_admin/frame
+    - click: {id: menu_contacts}
+    - click: {linktext: 添加成员}
+    - sendKeys: {username: "3"}
+    - sendKeys: {acctid: "80"}
+    - sendKeys: {mobile: "15609534763"}
+    - click: {cssSelector: .js_btn_save}
+
+
+
+

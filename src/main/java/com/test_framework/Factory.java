@@ -9,10 +9,10 @@ package com.test_framework;
 public class Factory {
 //通常为静态方法
     public static BasePage create(String driverName){
-        if(driverName=="app"|| driverName=="appium"){
+        if(driverName.equals("app")|| driverName.equals("appium")){
             return new com.wework.page.BasePage();
         }
-        if(driverName=="web"|| driverName=="selenium"){
+        if(driverName.equals("web")|| driverName.equals("selenium")){
             return new com.web.wework.page.BasePage();
         }
         return null;

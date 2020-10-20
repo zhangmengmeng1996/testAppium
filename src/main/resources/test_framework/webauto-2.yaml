@@ -1,0 +1,8 @@
+name: 添加企业微信成员
+description: 添加企业微信成员，查找确认添加已成功
+steps:
+  -page: MainPage
+  -action: toSearch
+  -page: SearchPage
+  -search: keyword
+
