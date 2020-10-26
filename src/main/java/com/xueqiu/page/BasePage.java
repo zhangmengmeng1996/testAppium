@@ -9,7 +9,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.List;
 
 /**
  * @program: testSelenium->BasePage
@@ -25,7 +24,7 @@ public class BasePage {
     public BasePage() {
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("platformName","Android");
-        capabilities.setCapability("udid","55510804");
+        capabilities.setCapability("udid","31b22b68");
         capabilities.setCapability("deviceName", "mumu");
         capabilities.setCapability("appPackage","com.xueqiu.android");
         capabilities.setCapability("appActivity", ".view.WelcomeActivityAlias");
